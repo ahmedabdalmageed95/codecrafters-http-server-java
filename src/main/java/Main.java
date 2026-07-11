@@ -31,6 +31,6 @@ public class Main {
   }
   
   private static String getResponse() {
-	  return "HTTP/1.1 200 OK \r\n\r\n";
+	  return "HTTP/1.1 200 OK\r\n\r\n";
   }
 }
