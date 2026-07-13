@@ -45,7 +45,7 @@ public class HttpServer {
 	  }
 	  
 	  private  String getResponse(String url) {
-		  return "HTTP/1.1"+ getResponseCodeAndMessage(url)+"\r\n\r\n";
+		  return "HTTP/1.1 "+ getResponseCodeAndMessage(url)+"\r\n\r\n";
 	  }
 	  
 	  private String getResponseCodeAndMessage(String url) {
