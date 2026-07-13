@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,11 +11,13 @@ public class HttpServer {
 	public void execute() throws IOException {
 		ServerSocket serverSocket = new ServerSocket(4221);
 	    Socket socket=initiateNewConnection(serverSocket);
-	    sendResponse(socket);
+	    String requestString=recieveRequest(socket);
+	    String url=getUrlFromRequestString(requestString);
+	    sendResponse(socket,url);
 	    serverSocket.close();
 	}
 	 
-	  private static Socket initiateNewConnection(ServerSocket serverSocket) throws IOException {
+	  private  Socket initiateNewConnection(ServerSocket serverSocket) throws IOException {
 		// Since the tester restarts your program quite often, setting SO_REUSEADDR
 	      // ensures that we don't run into 'Address already in use' errors
 	      serverSocket.setReuseAddress(true);    
@@ -22,14 +25,30 @@ public class HttpServer {
 	      return serverSocket.accept(); // Wait for connection from client.
 	  }
 	  
-	  private static void sendResponse(Socket socket) throws IOException {
+	  private String recieveRequest(Socket socket) throws IOException {
+		  InputStream inputStream= socket.getInputStream();
+		  byte [] requestToBytes= new byte[2048];
+		  Integer requestByteCount= inputStream.read(requestToBytes);
+		  return new String(requestToBytes, 0,requestByteCount, StandardCharsets.UTF_8);
+	  }
+	  
+	  private String getUrlFromRequestString(String requestString) {
+		  String[] requestLines=requestString.split("\r\n");
+		  return requestLines[1];
+	  }
+	  
+	  private  void sendResponse(Socket socket,String url) throws IOException {
 		  OutputStream outpustStream=socket.getOutputStream();
-	      byte[] responseToBytes=getResponse().getBytes(StandardCharsets.UTF_8);
+	      byte[] responseToBytes=getResponse(url).getBytes(StandardCharsets.UTF_8);
 	      outpustStream.write(responseToBytes);
 	      outpustStream.flush();
 	  }
 	  
-	  private static String getResponse() {
-		  return "HTTP/1.1 200 OK\r\n\r\n";
+	  private  String getResponse(String url) {
+		  return "HTTP/1.1"+ getResponseCodeAndMessage(url)+"\r\n\r\n";
+	  }
+	  
+	  private String getResponseCodeAndMessage(String url) {
+		  return url.contentEquals("/")?"200 OK":"404 Not Found";
 	  }
 }
