@@ -33,7 +33,7 @@ public class HttpServer {
 	  }
 	  
 	  private String getUrlFromRequestString(String requestString) {
-		  String[] requestLines=requestString.split("\r\n");
+		  String[] requestLines=requestString.split(" ");
 		  return requestLines[1];
 	  }
 	  
