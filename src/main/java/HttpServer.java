@@ -49,6 +49,18 @@ public class HttpServer {
 	  }
 	  
 	  private String getResponseCodeAndMessage(String url) {
-		  return url.contentEquals("/")?"200 OK":"404 Not Found";
+		  return url.contentEquals("/") || url.startsWith("/echo")?"200 OK":"404 Not Found"+getResponseBodyIfExists(url);
+	  }
+	  
+	  private String getResponseBodyIfExists(String url) {
+		  final String crlf="\r\n\r\n";
+		  return url.startsWith("/echo")?getResponseBody(url):crlf;
+	  }
+	  
+	  private String getResponseBody(String url) {
+		  String [] urlParts=url.split("/");
+		  String urlString=urlParts[urlParts.length-1];
+		  Integer urlStringLength=urlString.length();
+		  return "\r\nContent-Type: text/plain\r\nContent-Length: "+urlStringLength+"\r\n\r\n"+urlString;
 	  }
 }
