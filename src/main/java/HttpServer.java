@@ -45,16 +45,16 @@ public class HttpServer {
 	  }
 	  
 	  private  String getResponse(String url) {
-		  return "HTTP/1.1 "+ getResponseCodeAndMessage(url)+"\r\n\r\n";
+		  return "HTTP/1.1 "+ getResponseCodeAndMessage(url)+getResponseBodyIfExists(url);
 	  }
 	  
 	  private String getResponseCodeAndMessage(String url) {
-		  return url.contentEquals("/") || url.startsWith("/echo")?"200 OK":"404 Not Found"+getResponseBodyIfExists(url);
+		  return url.contentEquals("/") || url.startsWith("/echo/")?"200 OK":"404 Not Found";
 	  }
 	  
 	  private String getResponseBodyIfExists(String url) {
 		  final String crlf="\r\n\r\n";
-		  return url.startsWith("/echo")?getResponseBody(url):crlf;
+		  return url.startsWith("/echo/")?getResponseBody(url):crlf;
 	  }
 	  
 	  private String getResponseBody(String url) {
