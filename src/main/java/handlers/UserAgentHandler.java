@@ -20,6 +20,8 @@ public class UserAgentHandler extends AbstractHandler {
 	
 	private String getResponseBody() {
 		//User-Agent: foobar/1.2.3 -> foobar/1.2.3
+		System.out.println(Arrays.asList(request.split("\r\n")).stream().filter(e->e.toLowerCase().contains("user-agent")).findFirst().get()
+				);
 		return Arrays.asList(request.split("\r\n")).stream().filter(e->e.toLowerCase().contains("user-agent")).findFirst().get()
 				.split(":")[1].strip();
 	}
