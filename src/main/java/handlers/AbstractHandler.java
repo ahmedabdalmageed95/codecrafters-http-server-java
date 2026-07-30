@@ -16,7 +16,7 @@ public abstract class AbstractHandler {
 	
 	
 	public boolean isUrlMatchingUrlFromRequest() {
-		return urlToHandle.startsWith(getUrlFromRequestString().toLowerCase());
+		return urlToHandle.contains(getUrlFromRequestString().toLowerCase());
 	}
 	
 	 protected  String getResponseStatusLine() {
