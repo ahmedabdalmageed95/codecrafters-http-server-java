@@ -14,6 +14,6 @@ public class RootHandler extends AbstractHandler {
 
 	@Override
 	public String getResponse() {
-		return getResponseStatusLine();
+		return getResponseStatusLine()+"\r\n\r\n";
 	}
 }
