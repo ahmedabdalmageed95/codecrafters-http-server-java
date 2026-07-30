@@ -10,7 +10,7 @@ public class UserAgentHandler extends AbstractHandler {
 
 	@Override
 	public String getResponse() {
-		return getResponseStatusLine()+" "+getResponseHeaders()+getResponseBody();
+		return getResponseStatusLine()+getResponseHeaders()+getResponseBody();
 	}
 	
 	 protected String getResponseHeaders() {

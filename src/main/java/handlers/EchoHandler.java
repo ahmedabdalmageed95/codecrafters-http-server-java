@@ -7,7 +7,7 @@ public class EchoHandler extends AbstractHandler {
 	}
 	
 	public String getResponse() {
-		return getResponseStatusLine()+" "+getResponseHeaders()+getResponseBody();
+		return getResponseStatusLine()+getResponseHeaders()+getResponseBody();
 	}
 	 protected String getResponseHeaders() {
 		  Integer urlStringLength=getResponseBody().length();
