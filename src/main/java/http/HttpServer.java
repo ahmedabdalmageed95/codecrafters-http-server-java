@@ -29,6 +29,7 @@ public class HttpServer {
 		  InputStream inputStream= socket.getInputStream();
 		  byte [] requestToBytes= new byte[4096];
 		  Integer requestByteCount= inputStream.read(requestToBytes);
+		  requestByteCount=requestByteCount==-1?4095:requestByteCount;
 		  return new String(requestToBytes, 0,requestByteCount, StandardCharsets.UTF_8);
 	  }
 	  
