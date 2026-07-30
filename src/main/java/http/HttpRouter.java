@@ -7,7 +7,7 @@ import handlers.*;
 public class HttpRouter {
 	List<AbstractHandler> handlers;
 	public HttpRouter(String request) {
-		handlers=Arrays.asList(new EchoHandler(request),new RootHandler(request), new UserAgentHandler(request));
+		handlers=Arrays.asList(new RootHandler(request), new EchoHandler(request), new UserAgentHandler(request));
 	}
 	
 	

@@ -8,8 +8,9 @@ public class RootHandler extends AbstractHandler {
 		super("/",request);
 	}
 
-	public boolean isUrlMatching(String urlFromRequest) {
-		return getUrlFromRequestString().contentEquals(urlFromRequest.toLowerCase());
+	@Override
+	public boolean isUrlMatchingUrlFromRequest() {
+		return urlToHandle.contentEquals(getUrlFromRequestString());
 	}
 
 	@Override
