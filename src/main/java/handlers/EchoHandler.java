@@ -3,7 +3,7 @@ package handlers;
 public class EchoHandler extends AbstractHandler {
 
 	public EchoHandler(String request) {
-		super("/echo",request);
+		super("/echo/",request);
 	}
 	
 	public String getResponse() {
