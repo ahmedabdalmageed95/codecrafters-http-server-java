@@ -27,7 +27,7 @@ public class HttpServer {
 	  
 	  private String recieveRequest(Socket socket) throws IOException {
 		  InputStream inputStream= socket.getInputStream();
-		  byte [] requestToBytes= new byte[2048];
+		  byte [] requestToBytes= new byte[4096];
 		  Integer requestByteCount= inputStream.read(requestToBytes);
 		  return new String(requestToBytes, 0,requestByteCount, StandardCharsets.UTF_8);
 	  }
