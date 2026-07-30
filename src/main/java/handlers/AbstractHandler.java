@@ -16,6 +16,10 @@ public abstract class AbstractHandler {
 	
 	
 	public boolean isUrlMatchingUrlFromRequest() {
+		if(urlToHandle.isBlank() && getUrlFromRequestString().isBlank())
+		{
+			return false;
+		}
 		return getUrlFromRequestString().startsWith(urlToHandle);
 	}
 	
