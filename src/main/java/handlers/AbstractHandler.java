@@ -18,6 +18,7 @@ public abstract class AbstractHandler {
 	public boolean isUrlMatchingUrlFromRequest() {
 		System.out.println(urlToHandle);
 		System.out.println(getUrlFromRequestString());
+		System.out.println(urlToHandle.startsWith(getUrlFromRequestString()));
 		return urlToHandle.startsWith(getUrlFromRequestString());
 	}
 	
