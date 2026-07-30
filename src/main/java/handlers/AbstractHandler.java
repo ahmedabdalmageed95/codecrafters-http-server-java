@@ -11,15 +11,12 @@ public abstract class AbstractHandler {
 	
 	protected String getUrlFromRequestString() {
 		 String[] requestLines=request.split(" ");
+		 System.out.println(requestLines[0]);
 		 return requestLines[1];
 	 }
 	
 	
 	public boolean isUrlMatchingUrlFromRequest() {
-		if(urlToHandle.isBlank() && getUrlFromRequestString().isBlank())
-		{
-			return false;
-		}
 		return getUrlFromRequestString().startsWith(urlToHandle);
 	}
 	
