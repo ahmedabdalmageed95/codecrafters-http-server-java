@@ -1,3 +1,6 @@
+package http;
+import java.util.Arrays;
+import java.util.List;
 
 public class HttpResponse {
 	private String url;
@@ -6,16 +9,16 @@ public class HttpResponse {
 	}
 	
 	  public  String getResponse() {
-		  return "HTTP/1.1 "+ getResponseCodeAndMessage()+getResponseBodyIfExists();
+		  return "HTTP/1.1 "+ getResponseStatusLine()+getResponseBodyIfExists();
 	  }
 	  
-	  private String getResponseCodeAndMessage() {
-		  return url.contentEquals("/") || isEchoEndpoint()?"200 OK":"404 Not Found";
+	  private String getResponseStatusLine() {
+		  return url.contentEquals("/") || isValidEndPoint()?"200 OK":"404 Not Found";
 	  }
 	  
 	  private String getResponseBodyIfExists() {
 		  final String crlf="\r\n\r\n";
-		  return isEchoEndpoint()?getEchoEndpointResponseBody():crlf;
+		  return isValidEndPoint()?getEchoEndpointResponseBody():crlf;
 	  }
 	  
 	  private String getEchoEndpointResponseBody() {
@@ -25,7 +28,8 @@ public class HttpResponse {
 		  return "\r\nContent-Type: text/plain\r\nContent-Length: "+urlStringLength+"\r\n\r\n"+urlString;
 	  }
 	  
-	  private Boolean isEchoEndpoint() {
-		  return url.startsWith("/echo/");
+	  private Boolean isValidEndPoint() {
+		  List<String> validEndpoints=Arrays.asList("/echo/","/user-agent");
+		  return validEndpoints.stream().anyMatch(endPoint->url.startsWith(endPoint));
 	  }
 }

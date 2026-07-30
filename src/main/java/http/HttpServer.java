@@ -1,3 +1,4 @@
+package http;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -12,8 +13,7 @@ public class HttpServer {
 		ServerSocket serverSocket = new ServerSocket(4221);
 	    Socket socket=initiateNewConnection(serverSocket);
 	    String requestString=recieveRequest(socket);
-	    String url=getUrlFromRequestString(requestString);
-	    sendResponse(socket,url);
+	    sendResponse(socket,requestString);
 	    serverSocket.close();
 	}
 	 
@@ -32,14 +32,10 @@ public class HttpServer {
 		  return new String(requestToBytes, 0,requestByteCount, StandardCharsets.UTF_8);
 	  }
 	  
-	  private String getUrlFromRequestString(String requestString) {
-		  String[] requestLines=requestString.split(" ");
-		  return requestLines[1];
-	  }
 	  
-	  private  void sendResponse(Socket socket,String url) throws IOException {
+	  private  void sendResponse(Socket socket,String requestString) throws IOException {
 		  OutputStream outpustStream=socket.getOutputStream();
-	      byte[] responseToBytes=new HttpResponse(url).getResponse().getBytes(StandardCharsets.UTF_8);
+	      byte[] responseToBytes=new HttpRouter(requestString).getResponse().getBytes(StandardCharsets.UTF_8);
 	      outpustStream.write(responseToBytes);
 	      outpustStream.flush();
 	  }
