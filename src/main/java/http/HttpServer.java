@@ -11,12 +11,26 @@ public class HttpServer {
 	
 	public void execute() throws IOException {
 		ServerSocket serverSocket = new ServerSocket(4221);
-	    Socket socket=initiateNewConnection(serverSocket);
-	    String requestString=recieveRequest(socket);
-	    sendResponse(socket,requestString);
-	    serverSocket.close();
+		while(true) {
+			Socket socket=initiateNewConnection(serverSocket);
+			Thread clientThread=new Thread(()->handleClient(socket));
+			clientThread.start();
+			
+		    
+		}
+		// serverSocket.close();
+	    
 	}
 	 
+	private void handleClient(Socket socket) {
+		try(socket){
+		String requestString=recieveRequest(socket);
+	    sendResponse(socket,requestString);
+		}
+		catch(IOException exception) {
+			System.out.println(exception.getMessage());
+		}
+	}
 	  private  Socket initiateNewConnection(ServerSocket serverSocket) throws IOException {
 		// Since the tester restarts your program quite often, setting SO_REUSEADDR
 	      // ensures that we don't run into 'Address already in use' errors
