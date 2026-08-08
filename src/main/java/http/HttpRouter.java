@@ -10,6 +10,11 @@ public class HttpRouter {
 		handlers=Arrays.asList(new RootHandler(request), new EchoHandler(request), new UserAgentHandler(request));
 	}
 	
+	public HttpRouter(String request,String directory) {
+		this(request);
+		handlers.add(new FilesHandler(request,directory));
+	}
+	
 	
 	
 	public String getResponse() {

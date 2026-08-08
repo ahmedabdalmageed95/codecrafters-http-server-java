@@ -11,7 +11,6 @@ public abstract class AbstractHandler {
 	
 	protected String getUrlFromRequestString() {
 		 String[] requestLines=request.split(" ");
-		 System.out.println(requestLines[0]);
 		 return requestLines.length<2?"":requestLines[1];
 	 }
 	

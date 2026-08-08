@@ -8,9 +8,13 @@ import java.nio.charset.StandardCharsets;
 
 public class HttpServer {
 	ServerSocket serverSocket;
-	
+	private HttpServerConfig httpServerConfig;
+	public HttpServer(HttpServerConfig httpServerConfig) {
+		this.httpServerConfig=httpServerConfig;
+	}
+
 	public void execute() throws IOException {
-		ServerSocket serverSocket = new ServerSocket(4221);
+		ServerSocket serverSocket = new ServerSocket(httpServerConfig.getPort());
 		while(true) {
 			Socket socket=initiateNewConnection(serverSocket);
 			Thread clientThread=new Thread(()->handleClient(socket));
@@ -50,9 +54,15 @@ public class HttpServer {
 	  
 	  private  void sendResponse(Socket socket,String requestString) throws IOException {
 		  OutputStream outpustStream=socket.getOutputStream();
-	      byte[] responseToBytes=new HttpRouter(requestString).getResponse().getBytes(StandardCharsets.UTF_8);
+	      byte[] responseToBytes=getHttpRouter(requestString).getResponse().getBytes(StandardCharsets.UTF_8);
 	      outpustStream.write(responseToBytes);
 	      outpustStream.flush();
+	  }
+	  
+	  private HttpRouter getHttpRouter (String requestString) {
+		  return httpServerConfig.getDirectory().isPresent()?
+				  new HttpRouter(requestString,httpServerConfig.getDirectory().get())
+				 :new HttpRouter(requestString);
 	  }
 	  
 }
