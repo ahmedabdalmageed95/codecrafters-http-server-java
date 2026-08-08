@@ -11,7 +11,7 @@ public class HttpServerConfig {
 	}
 	
 	private Optional<String> extractDirectoryfromCmdArgs(String[] cmdArgs) {
-		if(cmdArgs[0].contentEquals("--directory") && cmdArgs.length==2) {
+		if(cmdArgs.length==2 && cmdArgs[0].contentEquals("--directory") ) {
 			return Optional.of(cmdArgs[1]);
 		}
 		
