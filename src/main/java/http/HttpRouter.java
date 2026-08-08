@@ -1,19 +1,15 @@
 package http;
-import java.util.Arrays;
 import java.util.List;
 
 import handlers.*;
 
 public class HttpRouter {
 	List<AbstractHandler> handlers;
-	public HttpRouter(String request) {
-		handlers=Arrays.asList(new RootHandler(request), new EchoHandler(request), new UserAgentHandler(request));
+	public HttpRouter(List<AbstractHandler> handlers) {
+		this.handlers=handlers;
 	}
 	
-	public HttpRouter(String request,String directory) {
-		this(request);
-		handlers.add(new FilesHandler(request,directory));
-	}
+	
 	
 	
 	

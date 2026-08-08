@@ -5,6 +5,12 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
+import handlers.EchoHandler;
+import handlers.FilesHandler;
+import handlers.RootHandler;
+import handlers.UserAgentHandler;
 
 public class HttpServer {
 	ServerSocket serverSocket;
@@ -59,10 +65,10 @@ public class HttpServer {
 	      outpustStream.flush();
 	  }
 	  
-	  private HttpRouter getHttpRouter (String requestString) {
+	  private HttpRouter getHttpRouter (String request) {
 		  return httpServerConfig.getDirectory().isPresent()?
-				  new HttpRouter(requestString,httpServerConfig.getDirectory().get())
-				 :new HttpRouter(requestString);
+				  new HttpRouter(Arrays.asList(new RootHandler(request), new EchoHandler(request), new UserAgentHandler(request), new FilesHandler(request,httpServerConfig.getDirectory().get())))
+				 :new HttpRouter(Arrays.asList(new RootHandler(request), new EchoHandler(request), new UserAgentHandler(request)));
 	  }
 	  
 }

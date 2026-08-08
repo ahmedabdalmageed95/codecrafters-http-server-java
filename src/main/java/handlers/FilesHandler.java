@@ -25,7 +25,9 @@ public class FilesHandler extends AbstractHandler {
 	private String getFileContent() {
 		String path=directory+"/"+getFileName();
 		File file = new File(path);
+		System.out.println(path);
 		if(file.exists()) {
+			System.out.println("file exists");
 			return getFileContent(path);
 		}
 		return directory;
