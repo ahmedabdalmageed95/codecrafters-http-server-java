@@ -9,7 +9,7 @@ public class RootHandler extends AbstractHandler {
 	}
 
 	@Override
-	public boolean isUrlMatchingUrlFromRequest() {
+	public boolean areConditionsMatched() {
 		return urlToHandle.contentEquals(getUrlFromRequestString());
 	}
 

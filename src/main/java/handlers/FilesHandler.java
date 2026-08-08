@@ -14,6 +14,10 @@ public class FilesHandler extends AbstractHandler {
 	}
 
 	@Override
+	public boolean areConditionsMatched() {
+		return super.areConditionsMatched()&& new File(getFilePath()).exists();
+	}
+	@Override
 	public String getResponse() {
 		return getResponseStatusLine()+getResponseHeaders()+getFileContent();
 	}
@@ -23,16 +27,17 @@ public class FilesHandler extends AbstractHandler {
 	}
 	
 	private String getFileContent() {
-		String path=directory+"/"+getFileName();
-		File file = new File(path);
-		System.out.println(path);
+		File file = new File(getFilePath());
 		if(file.exists()) {
-			System.out.println("file exists");
-			return getFileContent(path);
+			return getFileContent(getFilePath());
 		}
 		return directory;
 	}
 
+	private String getFilePath() {
+		return directory+"/"+getFileName();
+	}
+	
 	private String getFileContent(String path) {
 		String fileContent="";
 		try  {

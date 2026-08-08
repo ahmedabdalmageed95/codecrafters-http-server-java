@@ -14,10 +14,11 @@ public abstract class AbstractHandler {
 		 return requestLines.length<2?"":requestLines[1];
 	 }
 	
-	
-	public boolean isUrlMatchingUrlFromRequest() {
+	public boolean areConditionsMatched() {
 		return getUrlFromRequestString().startsWith(urlToHandle);
 	}
+	
+	
 	
 	 protected  String getResponseStatusLine() {
 		  return "HTTP/1.1 "+ HttpStatusCode.OK.getCode()+" "+HttpStatusCode.OK.getReasonPhrase();

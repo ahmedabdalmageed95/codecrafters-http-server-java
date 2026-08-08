@@ -15,7 +15,7 @@ public class HttpRouter {
 	
 	public String getResponse() {
 		for(AbstractHandler handler : handlers) {
-			if(handler.isUrlMatchingUrlFromRequest()) {
+			if(handler.areConditionsMatched()) {
 				return handler.getResponse(); 
 			}
 		}
